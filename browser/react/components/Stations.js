@@ -8,8 +8,7 @@ export default function (props) {
   //   { name: 'Death Metal' },
   //   { name: 'Classical' }
   // ];
-  console.log("props.stations in Stations.js ", props.stations);
-
+  
   return (
     <div>
       <h3>Stations</h3>
@@ -18,7 +17,7 @@ export default function (props) {
         Object.keys(props.stations).map(station => {
           return (
             <div className="list-group-item" key={station}>
-              <Link to={'fill/me/in/later'}>{station}</Link>
+              <Link to={`/stations/${station}`}>{station}</Link>
             </div>
           );
         })
