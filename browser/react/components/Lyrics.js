@@ -1,6 +1,7 @@
 import React from 'react';
+import {Field, reduxForm} from 'redux-form';
 
-export default function (props) {
+export default lyricsSearchForm = function (props) {
 
   const text = props.lyrics.text;
   const artistQuery = props.artistQuery;
@@ -43,3 +44,4 @@ export default function (props) {
     </div>
   );
 }
+
