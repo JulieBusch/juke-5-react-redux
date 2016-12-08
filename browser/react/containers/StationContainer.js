@@ -2,9 +2,8 @@ import React from 'react';
 import {connect} from 'react-redux';
 
 import Station from '../components/Station';
+import { toggleSong} from '../action-creators/player';
 import { convertSong } from '../utils';
-
-
 
 
 function mapStateToProps(state, ownProps) {
@@ -20,7 +19,11 @@ function mapStateToProps(state, ownProps) {
   }
 
 function mapDispatchToProps(dispatch, ownProps) {
-    return {};
+    return {
+      toggleOne: function (song, list){
+        dispatch(toggleSong(song, list));
+      }
+    };
   }
 
 export default connect (mapStateToProps, mapDispatchToProps)(Station);

@@ -8,6 +8,9 @@ function convertSongsToStations(songsArray) {
   songsArray.forEach(function(song) {
     if (stations[song.genre]) {
       stations[song.genre].push(song);
+    } 
+    if (!song.genre) {
+      return;
     } else {
       stations[song.genre] = [song];
     }
