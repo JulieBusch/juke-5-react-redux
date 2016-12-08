@@ -4,6 +4,7 @@ import Songs from './Songs';
 export default function (props) {
 
   const songs = props.songs;
+  console.log(songs);
   const error = props.error;
   const handleChange = props.handleChange;
   const handleSubmit = props.handleSubmit;

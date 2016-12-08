@@ -1,32 +1,35 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import AddSong from '../components/AddSong';
-import store from '../store';
+
 import {loadAllSongs, addSongToPlaylist} from '../action-creators/playlists';
+
+
+function mapStateToProps(state) {
+    return {
+      songs: state.songs,
+      playlists: state.playlists
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        addSongToPlaylist: function(playlistId, songId){
+          dispatch(addSongToPlaylist(playlistId, songId))
+        }
+      }
+}
 
 class AddSongContainer extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = Object.assign({
+    this.state = {
       songId: 1,
       error: false
-    }, store.getState());
+    }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  componentDidMount() {
-
-    this.unsubscribe = store.subscribe(() => {
-      this.setState(store.getState());
-    });
-
-    store.dispatch(loadAllSongs());
-
-  }
-
-  componentWillUnmount() {
-    this.unsubscribe();
   }
 
   handleChange(evt) {
@@ -37,31 +40,26 @@ class AddSongContainer extends React.Component {
   }
 
   handleSubmit(evt) {
-
     evt.preventDefault();
-
-    const playlistId = this.state.playlists.selected.id;
+    const playlistId = this.props.playlists.selected.id;
     const songId = this.state.songId;
-
-    store.dispatch(addSongToPlaylist(playlistId, songId))
-      .catch(() => this.setState({ error: true }));
-
+    this.props.addSongToPlaylist(playlistId, songId);
   }
 
   render() {
 
-    const songs = this.state.songs;
-    const error = this.state.error;
+    const songs = this.props.songs;
+    // const error = this.state.error;
 
     return (
       <AddSong
-        {...this.props}
+        {...this.state}
         songs={songs}
-        error={error}
+
         handleChange={this.handleChange}
         handleSubmit={this.handleSubmit}/>
     );
   }
 }
 
-export default AddSongContainer;
+export default connect(mapStateToProps, mapDispatchToProps)(AddSongContainer)
